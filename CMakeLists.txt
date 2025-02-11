@@ -25,12 +25,17 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
+# Option to enable or disable debug messaging
+option(ENABLE_DEBUG_MESSAGES "Enable debug messaging" OFF)
+message(STATUS "[DEBUG MESSAGES] >> ${ENABLE_DEBUG_MESSAGES} <<")
+
+
 # Compiler-specific settings
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   # Use libc++ with Clang
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++ -lc++abi")
-  set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -stdlib=libc++ -lc++abi")
+  #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++")
+  #set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -stdlib=libc++")
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   # Use libstdc++ with GCC
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++")
@@ -46,15 +51,17 @@ set(CMAKE_CXX_FLAGS_MINSIZEREL "-Os -Wall -Wextra -Werror -pedantic")
 function(add_project projectPath)
   get_filename_component(dirPath ${projectPath} DIRECTORY)
   get_filename_component(projectName ${dirPath} NAME)
-  message(STATUS "[FOUND] >> ${projectName} <<")
-
+  if(ENABLE_DEBUG_MESSAGES)
+    message(STATUS "[FOUND] >> ${projectName} <<")
+  endif()
   file(GLOB projectSources CONFIGURE_DEPENDS "${dirPath}/*.cpp")
   add_executable(${projectName} ${projectSources})
   target_include_directories(${projectName} PUBLIC "${dirPath}/include")
+  target_link_libraries(${projectName} c++ c++abi)
 endfunction()
 
 # Add all projects in the src directory
-file(GLOB_RECURSE mainFiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} main.cpp)
+file(GLOB_RECURSE mainFiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} src/main.cpp)
 
 foreach(mainFile ${mainFiles})
   add_project(${mainFile})
@@ -65,7 +72,7 @@ endforeach()
 
 # Option to enable or disable Google Test
 option(ENABLE_TESTING "Enable testing with Google Test" OFF)
-message(STATUS "Testing with Google Test: ${ENABLE_TESTING}")
+message(STATUS "[LINKING GTEST] >> ${ENABLE_TESTING} <<")
 if(ENABLE_TESTING)
   # Add Google Test
   enable_testing()

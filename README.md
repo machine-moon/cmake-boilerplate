@@ -35,7 +35,6 @@ The provided `Makefile` includes several useful targets to streamline your workf
     make
     ```
 
-
 2. **Clean the build and bin directories**:
     ```sh
     make clean
