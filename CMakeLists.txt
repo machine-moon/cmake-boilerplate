@@ -46,7 +46,7 @@ set(CMAKE_CXX_FLAGS_MINSIZEREL "-Os -Wall -Wextra -Werror -pedantic")
 function(add_project projectPath)
   get_filename_component(dirPath ${projectPath} DIRECTORY)
   get_filename_component(projectName ${dirPath} NAME)
-  message(STATUS "[HIT] Found project >>${projectName}<<")
+  message(STATUS "[FOUND] >> ${projectName} <<")
 
   file(GLOB projectSources CONFIGURE_DEPENDS "${dirPath}/*.cpp")
   add_executable(${projectName} ${projectSources})
@@ -60,20 +60,39 @@ foreach(mainFile ${mainFiles})
   add_project(${mainFile})
 endforeach()
 
-# Add Google Test
-enable_testing()
-include(FetchContent)
-FetchContent_Declare(
-  googletest
-  URL https://github.com/google/googletest/archive/refs/tags/release-1.12.1.zip
+
+# testing 
+
+# Option to enable or disable Google Test
+option(ENABLE_TESTING "Enable testing with Google Test" OFF)
+
+if(ENABLE_TESTING)
+  # Add Google Test
+  enable_testing()
+  include(FetchContent)
+  FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/release-1.12.1.zip
+  )
+  FetchContent_MakeAvailable(googletest)
+
+  # Add tests
+  file(GLOB test_sources tests/*.cpp)
+  add_executable(testMe ${test_sources})
+  target_link_libraries(testMe gtest_main)
+
+  # Discover tests
+  include(GoogleTest)
+  gtest_discover_tests(testMe)
+endif()
+
+# Add a custom target for cleaning the build directory
+add_custom_target(wipe
+  COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/cmake_clean.cmake
+  COMMENT "Cleaning build directory"
 )
-FetchContent_MakeAvailable(googletest)
 
-# Add tests
-file(GLOB test_sources tests/*.cpp)
-add_executable(testMe ${test_sources})
-target_link_libraries(testMe gtest_main)
-
-# Discover tests
-include(GoogleTest)
-gtest_discover_tests(testMe)
+# Create a script to clean the build directory
+file(WRITE ${CMAKE_BINARY_DIR}/cmake_clean.cmake
+  "file(REMOVE_RECURSE ${CMAKE_BINARY_DIR})\n"
+)
