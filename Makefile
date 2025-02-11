@@ -1,5 +1,5 @@
 # Define the build directory and the binary directory
-BUILD_DIR = builddir 
+BUILD_DIR = build 
 BIN_DIR =   bin
 LATEST = latest
 
