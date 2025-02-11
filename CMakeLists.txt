@@ -65,7 +65,7 @@ endforeach()
 
 # Option to enable or disable Google Test
 option(ENABLE_TESTING "Enable testing with Google Test" OFF)
-
+message(STATUS "Testing with Google Test: ${ENABLE_TESTING}")
 if(ENABLE_TESTING)
   # Add Google Test
   enable_testing()
@@ -86,13 +86,3 @@ if(ENABLE_TESTING)
   gtest_discover_tests(testMe)
 endif()
 
-# Add a custom target for cleaning the build directory
-add_custom_target(wipe
-  COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/cmake_clean.cmake
-  COMMENT "Cleaning build directory"
-)
-
-# Create a script to clean the build directory
-file(WRITE ${CMAKE_BINARY_DIR}/cmake_clean.cmake
-  "file(REMOVE_RECURSE ${CMAKE_BINARY_DIR})\n"
-)

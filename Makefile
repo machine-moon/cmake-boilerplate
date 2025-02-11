@@ -1,5 +1,5 @@
 # Define the build directory and the binary directory
-BUILD_DIR = build 
+BUILD_DIR = builddir 
 BIN_DIR =   bin
 LATEST = latest
 
@@ -30,6 +30,8 @@ run:
 
 test:
 	@echo "Running tests..."
-	@cd $(BUILD_DIR) && ctest
+	@cmake -S . -B $(BUILD_DIR) -DENABLE_TESTING=ON -G Ninja 
+	@cmake --build $(BUILD_DIR)
+	@ctest --test-dir $(BUILD_DIR)
 
 .PHONY: all build clean run fresh test
