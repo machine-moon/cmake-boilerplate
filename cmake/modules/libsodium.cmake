@@ -1,0 +1,7 @@
+pkg_check_modules(SODIUM REQUIRED libsodium)
+
+add_library(SODIUM::libsodium INTERFACE IMPORTED)
+set_target_properties(SODIUM::libsodium PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${SODIUM_INCLUDE_DIRS}"
+    INTERFACE_LINK_LIBRARIES "${SODIUM_LIBRARIES}"
+)

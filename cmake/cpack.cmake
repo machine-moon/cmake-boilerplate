@@ -1,0 +1,26 @@
+# --- CPack Configuration ---
+set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
+set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A programmed that does something interesting.")
+set(CPACK_PACKAGE_VENDOR "Tarek Ibrahim")
+
+# Required for Debian packaging
+set(CPACK_PACKAGE_CONTACT "tarek@mydomain.com")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgl1")
+
+# --- Package Generator ---
+if(APPLE)
+    set(CPACK_GENERATOR "ZIP")
+    set(CPACK_PACKAGE_FILE_NAME "twiz-${CPACK_PACKAGE_VERSION}-macos")
+elseif(WIN32)
+    set(CPACK_GENERATOR "ZIP")
+    set(CPACK_PACKAGE_FILE_NAME "twiz-${CPACK_PACKAGE_VERSION}-windows")
+elseif(UNIX AND NOT APPLE)
+    set(CPACK_GENERATOR "ZIP")
+    set(CPACK_PACKAGE_FILE_NAME "twiz-${CPACK_PACKAGE_VERSION}-linux")
+endif()
+
+include(CPack)

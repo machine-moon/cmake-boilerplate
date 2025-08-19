@@ -1,0 +1,14 @@
+Release Notes
+-------------------------------------------------------------------
+Document all technical changes introduced in this release as concise bullet points below.
+
+v0.0.2 (2025-09-28)
+----------------------
+Tarek Ibrahim
+- Added GPU support for HIP or CUDA
+- Updated build architecture selection for GPU targets
+
+v0.0.1 (2025-09-21)
+----------------------
+Tarek Ibrahim
+- CMake build system with ccache and C++20 support

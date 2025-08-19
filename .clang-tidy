@@ -1,0 +1,236 @@
+Checks: >
+  bugprone-*,
+  cert-*,
+  -clang-analyzer-*,
+  cppcoreguidelines-*,
+  google-*,
+  hicpp-*,
+  llvm-*,
+  misc-*,
+  modernize-*,
+  -modernize-use-using,
+  -modernize-deprecated-headers,
+  -modernize-loop-convert,
+  -modernize-make-shared,
+  -modernize-make-unique,
+  -modernize-raw-string-literal,
+  -modernize-return-braced-init-list,
+  -misc-include-cleaner,
+  performance-*,
+  portability-*,
+  readability-*,
+  -readability-static-accessed-through-instance,
+  -bugprone-easily-swappable-parameters,
+  -bugprone-exception-escape,
+  -bugprone-narrowing-conversions,
+  -bugprone-empty-catch,
+  -cert-dcl21-cpp,
+  -cert-dcl58-cpp,
+  -cert-err33-c,
+  -cert-msc30-c,
+  -cert-msc50-cpp,
+  -cert-oop57-cpp,
+  -cert-oop58-cpp,
+  -cppcoreguidelines-avoid-c-arrays,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -cppcoreguidelines-avoid-non-const-global-variables,
+  -cppcoreguidelines-macro-usage,
+  -cppcoreguidelines-narrowing-conversions,
+  -cppcoreguidelines-non-private-member-variables-in-classes,
+  -cppcoreguidelines-owning-memory,
+  -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
+  -cppcoreguidelines-pro-bounds-constant-array-index,
+  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+  -cppcoreguidelines-pro-type-const-cast,
+  -cppcoreguidelines-pro-type-cstyle-cast,
+  -cppcoreguidelines-pro-type-reinterpret-cast,
+  -cppcoreguidelines-pro-type-static-downcast,
+  -cppcoreguidelines-pro-type-union-access,
+  -cppcoreguidelines-pro-type-vararg,
+  -cppcoreguidelines-special-member-functions,
+  -google-build-using-namespace,
+  -google-explicit-constructor,
+  -google-readability-avoid-underscore-in-googletest-name,
+  -google-readability-todo,
+  -google-runtime-references,
+  -hicpp-avoid-c-arrays,
+  -hicpp-explicit-conversions,
+  -hicpp-member-init,
+  -hicpp-move-const-arg,
+  -hicpp-named-parameter,
+  -hicpp-no-array-decay,
+  -hicpp-signed-bitwise,
+  -hicpp-special-member-functions,
+  -hicpp-static-assert,
+  -hicpp-uppercase-literal-suffix,
+  -hicpp-use-auto,
+  -hicpp-use-emplace,
+  -hicpp-use-equals-default,
+  -hicpp-use-equals-delete,
+  -hicpp-use-noexcept,
+  -hicpp-use-nullptr,
+  -hicpp-use-override,
+  -hicpp-vararg,
+  -llvm-header-guard,
+  -llvm-include-order,
+  -misc-non-private-member-variables-in-classes,
+  -misc-no-recursion,
+  -misc-use-anonymous-namespace,
+  -modernize-avoid-c-arrays,
+  -modernize-use-trailing-return-type,
+  -readability-avoid-const-params-in-decls,
+  -readability-convert-member-functions-to-static,
+  -readability-function-cognitive-complexity,
+  -readability-function-size,
+  -readability-identifier-length,
+  -readability-implicit-bool-conversion,
+  -readability-isolate-declaration,
+  -readability-magic-numbers,
+  -readability-named-parameter,
+  -readability-redundant-access-specifiers,
+  -readability-uppercase-literal-suffix
+
+CheckOptions:
+  # Naming conventions based on standard.md Section 3
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+  - key: readability-identifier-naming.ClassPrefix
+    value: C
+  - key: readability-identifier-naming.StructCase
+    value: CamelCase
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+  - key: readability-identifier-naming.FunctionCase
+    value: CamelCase
+  - key: readability-identifier-naming.MethodCase
+    value: CamelCase
+  - key: readability-identifier-naming.VariableCase
+    value: camelBack
+  - key: readability-identifier-naming.MemberCase
+    value: camelBack
+  - key: readability-identifier-naming.MemberPrefix
+    value: m_
+  - key: readability-identifier-naming.ParameterCase
+    value: camelBack
+  - key: readability-identifier-naming.ParameterMinimumLength
+    value: 1
+  - key: readability-identifier-naming.VariableMinimumLength
+    value: 1
+  - key: readability-identifier-naming.ConstantMinimumLength
+    value: 1
+  - key: readability-identifier-naming.ConstantMemberMinimumLength
+    value: 1
+  - key: readability-identifier-naming.StaticConstantMinimumLength
+    value: 1
+  - key: readability-identifier-naming.GlobalConstantMinimumLength
+    value: 1
+  - key: readability-identifier-naming.EnumConstantMinimumLength
+    value: 1
+  - key: readability-identifier-naming.ConstantCase
+    value: camelBack
+  - key: readability-identifier-naming.ConstantMemberCase
+    value: camelBack
+  - key: readability-identifier-naming.StaticConstantCase
+    value: camelBack
+  - key: readability-identifier-naming.GlobalConstantCase
+    value: camelBack
+  - key: readability-identifier-naming.MacroDefinitionCase
+    value: UPPER_CASE
+  - key: readability-identifier-naming.NamespaceCase
+    value: CamelCase
+  - key: readability-identifier-naming.EnumConstantCase
+    value: UPPER_CASE
+
+  - key: readability-const-placement.ConstPlacement
+    value: Left
+
+  # Pointers should be prefixed with 'p' (standard.md Section 3)
+  - key: readability-identifier-naming.PointerParameterCase
+    value: camelBack
+  - key: readability-identifier-naming.PointerParameterPrefix
+    value: p
+
+  # Function length and complexity limits (standard.md Section 6)
+  - key: readability-function-size.LineThreshold
+    value: 200
+  - key: readability-function-size.StatementThreshold
+    value: 50
+  - key: readability-function-size.BranchThreshold
+    value: 10
+  - key: readability-function-size.ParameterThreshold
+    value: 8
+  - key: readability-function-size.NestingThreshold
+    value: 4
+  
+  # Performance and modern C++ preferences (standard.md Sections 7, 10)
+  - key: performance-for-range-copy.WarnOnAllAutoCopies
+    value: true
+  - key: performance-move-const-arg.CheckTriviallyCopyableMove
+    value: false
+  - key: modernize-use-nullptr.NullMacros
+    value: 'NULL'
+  - key: modernize-use-override.AllowOverrideAndFinal
+    value: true
+  - key: modernize-use-override.OverrideSpelling
+    value: override
+  - key: modernize-use-override.FinalSpelling
+    value: final
+
+  # Exception handling (standard.md Section 9)
+  - key: hicpp-exception-baseclass.CheckedExceptions
+    value: true
+
+  # Bracing style enforcement (standard.md Section 2)
+  - key: readability-braces-around-statements.ShortStatementLines
+    value: 0
+
+  # Include organization (standard.md Section 4)
+  - key: llvm-include-order.Priority1
+    value: '^".*\.h"$'
+  - key: llvm-include-order.Priority2
+    value: '^<.*\.h>$'
+  - key: llvm-include-order.Priority3
+    value: '^<.*>$'
+
+  # Multithreading safety (standard.md Section 11)
+  - key: misc-throw-by-value-catch-by-reference.CheckThrowTemporaries
+    value: true
+
+  # Code quality preferences (standard.md Section 6)
+  - key: readability-simplify-boolean-expr.ChainedConditionalReturn
+    value: true
+  - key: readability-simplify-boolean-expr.ChainedConditionalAssignment
+    value: true
+  - key: misc-throw-by-value-catch-by-reference.CheckThrowTemporaries
+    value: true
+
+  # Magic numbers (standard.md Section 13)
+  - key: cppcoreguidelines-avoid-magic-numbers.IgnoredIntegerValues
+    value: '0;1;-1'
+  - key: cppcoreguidelines-avoid-magic-numbers.IgnoredFloatingPointValues
+    value: '0.0;1.0;-1.0'
+
+  # Header guard preferences (standard.md Section 13)
+  - key: llvm-header-guard.HeaderFileExtensions
+    value: 'h,hh,hpp,hxx'
+
+HeaderFilterRegex: '^src/'
+
+WarningsAsErrors: ''
+
+FormatStyle: file
+
+# Specific rules for this project based on standard.md:
+# 1. Classes must have 'C' prefix (enforced by readability-identifier-naming)
+# 2. Member variables must have 'm_' prefix (enforced by readability-identifier-naming)
+# 3. Pointers should have 'p' prefix (enforced by readability-identifier-naming)
+# 4. Constants should be camelBack (enforced by readability-identifier-naming)
+# 4.1. Const qualifiers should be on the left (enforced by readability-const-placement)
+# 5. Use pragma once (enforced by llvm-header-guard being disabled)
+# 6. Prefer early returns to reduce nesting (enforced by readability checks)
+# 7. Use const appropriately (enforced by misc-const-correctness)
+# 8. Use override keyword (enforced by modernize-use-override)
+# 9. Use nullptr (enforced by modernize-use-nullptr)
+# 10. Proper exception handling (enforced by exception-related checks)
+# 11. Thread safety considerations (enforced by thread-safety checks)
+# 12. Performance optimizations (enforced by performance-* checks)
