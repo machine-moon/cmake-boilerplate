@@ -1,0 +1,52 @@
+name: Build
+
+on:
+  push:
+
+jobs:
+  build:
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "macOS",
+            os: macos-latest
+          }
+        - {
+            name: "Linux",
+            os: ubuntu-latest
+          }
+        - {
+            name: "Windows",
+            os: windows-latest
+          }
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install CMake
+        uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake-version: "3.22.0"
+
+      - name: Install Ninja
+        uses: seanmiddleditch/gha-setup-ninja@master
+
+      - name: Install Linux Dependencies
+        if: matrix.config.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libglfw3-dev libgl1-mesa-dev xorg-dev
+
+      - name: Verify
+        run: |
+          cmake --version
+          ninja --version
+
+      - name: Build
+        run: |
+          cmake -B build . -G Ninja
+          cmake --build build
