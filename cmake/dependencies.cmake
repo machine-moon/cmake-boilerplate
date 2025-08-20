@@ -8,4 +8,3 @@ include(${CMAKE_SOURCE_DIR}/cmake/modules/boost.cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/modules/cgal.cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/modules/imgui.cmake)
 
-set(${TWIZ}_deps "${CGAL_PACKAGE_INCLUDES};${Boost_INCLUDE_DIRS};${glad_include_dir}")

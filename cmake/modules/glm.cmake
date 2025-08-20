@@ -8,4 +8,4 @@ CPMAddPackage(
         "GLM_ENABLE_CXX_20 ON"
 )
 
-target_include_directories(glm PRIVATE ${glm_SOURCE_DIR}/glm)
+target_include_directories(glm INTERFACE ${glm_SOURCE_DIR})

@@ -44,6 +44,10 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/bin)
 
 
+# Dependency management
+include(cmake/dependencies.cmake)
+find_package(OpenGL REQUIRED)
+
 # --- Targets ---
 set(sources
     src/Source/boost_example.cpp
@@ -55,23 +59,9 @@ set(sources
     src/Source/something.cpp
 )
 
-
 add_library(${PROJECT_NAME}-lib STATIC ${sources})
-target_include_directories(${PROJECT_NAME}-lib PUBLIC ${headers})
-
-add_executable(${PROJECT_NAME} src/Source/main.cpp)
-target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
-
-# Dependency management
-include(cmake/dependencies.cmake)
-find_package(OpenGL REQUIRED)
-
-# target
-if(NOT PROJECT_NAME STREQUAL "twiz")
-    message(FATAL_ERROR "PROJECT_NAME must be 'twiz'")
-endif()
-
-target_link_libraries(${PROJECT_NAME}
+target_include_directories(${PROJECT_NAME}-lib PUBLIC src/Headers)
+target_link_libraries(${PROJECT_NAME}-lib PUBLIC
     Boost::beast
     CGAL
     glad
@@ -79,7 +69,18 @@ target_link_libraries(${PROJECT_NAME}
     glm
     imgui
     OpenGL::GL
-    CGAL
+)
+
+add_executable(${PROJECT_NAME} src/Source/main.cpp)
+target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
+
+# target
+if(NOT PROJECT_NAME STREQUAL "twiz")
+    message(FATAL_ERROR "PROJECT_NAME must be 'twiz'")
+endif()
+
+target_link_libraries(${PROJECT_NAME}
+    ${PROJECT_NAME}-lib
 )
 
 
