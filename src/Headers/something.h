@@ -1,6 +1,7 @@
 #pragma once
 
-namespace twiz {
+namespace twiz
+{
 
 void print_message();
 

@@ -7,13 +7,14 @@
 #include "imgui_example.h"
 #include "something.h"
 
-int main() {
-  twiz::print_message();
-  twiz_examples::show_glm();
-  twiz_examples::show_glad();
-  twiz_examples::show_glfw();
-  twiz_examples::show_boost();
-  twiz_examples::show_imgui();
-  twiz_examples::show_cgal();
-  return 0;
+int main()
+{
+    twiz::print_message();
+    twiz_examples::show_glm();
+    twiz_examples::show_glad();
+    twiz_examples::show_glfw();
+    twiz_examples::show_boost();
+    twiz_examples::show_imgui();
+    twiz_examples::show_cgal();
+    return 0;
 }

@@ -3,7 +3,6 @@ CPMAddPackage(
     GITHUB_REPOSITORY CGAL/cgal
     VERSION 6.0.1
 )
-message("CGAL_SOURCE_DIR: ${CGAL_SOURCE_DIR}")
 
 file(GLOB CGAL_PACKAGE_INCLUDES
         "${CGAL_SOURCE_DIR}/*/include"

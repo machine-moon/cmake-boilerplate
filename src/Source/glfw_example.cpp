@@ -2,9 +2,12 @@
 #include <GLFW/glfw3.h>
 #include <stdio.h>
 
-namespace twiz_examples {
-void show_glfw() {
-    if (!glfwInit()) {
+namespace twiz_examples
+{
+void show_glfw()
+{
+    if (!glfwInit())
+    {
         printf("GLFW init failed\n");
         return;
     }
@@ -12,13 +15,16 @@ void show_glfw() {
     glfwTerminate();
 }
 
-void create_window() {
-    if (!glfwInit()) {
+void create_window()
+{
+    if (!glfwInit())
+    {
         printf("GLFW init failed\n");
         return;
     }
     GLFWwindow* window = glfwCreateWindow(640, 480, "GLFW Window", nullptr, nullptr);
-    if (!window) {
+    if (!window)
+    {
         printf("Window creation failed\n");
         glfwTerminate();
         return;
@@ -28,21 +34,25 @@ void create_window() {
     glfwTerminate();
 }
 
-void poll_events_example() {
-    if (!glfwInit()) {
+void poll_events_example()
+{
+    if (!glfwInit())
+    {
         printf("GLFW init failed\n");
         return;
     }
     GLFWwindow* window = glfwCreateWindow(320, 240, "Poll Events", nullptr, nullptr);
-    if (!window) {
+    if (!window)
+    {
         printf("Window creation failed\n");
         glfwTerminate();
         return;
     }
-    while (!glfwWindowShouldClose(window)) {
+    while (!glfwWindowShouldClose(window))
+    {
         glfwPollEvents();
     }
     glfwDestroyWindow(window);
     glfwTerminate();
 }
-}
+} // namespace twiz_examples

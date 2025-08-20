@@ -5,7 +5,8 @@ CPMAddPackage(
     GIT_TAG v2.0.8
 )
 
-message("glad_SOURCE_DIR: ${glad_SOURCE_DIR}")
+
+##### Glad OpenGL loader integration setup - EOF has glad_add_library() - DO NOT EDIT #####
 
 # Configuration variables
 set(
@@ -275,7 +276,9 @@ function(glad_add_library TARGET)
             )
     endif()
 endfunction()
-######################################################
+
+##### Glad OpenGL loader integration setup - DO NOT EDIT #####
+
 
 glad_add_library(glad STATIC
     API gl:core=4.6
@@ -283,9 +286,7 @@ glad_add_library(glad STATIC
     LANGUAGE c
 )
 
-set(glad_include_dir "${CMAKE_BINARY_DIR}/gladsources/glad/include")
+target_include_directories(glad PUBLIC "${CMAKE_BINARY_DIR}/gladsources/glad/include")
 
-target_include_directories(glad PUBLIC "${glad_include_dir}")
-
-
+#set(glad_include_dir "${CMAKE_BINARY_DIR}/gladsources/glad/include")
 #include_directories(${glad_include_dir})

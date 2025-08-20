@@ -2,10 +2,12 @@
 
 #include <iostream>
 
-namespace twiz {
+namespace twiz
+{
 
-void print_message() {
-  std::cout << "Hello from something!" << std::endl;
+void print_message()
+{
+    std::cout << "Hello from something!" << std::endl;
 }
 
-}
+} // namespace twiz
