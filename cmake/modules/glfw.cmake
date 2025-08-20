@@ -7,6 +7,7 @@ CPMAddPackage(
         "GLFW_BUILD_EXAMPLES OFF"
         "GLFW_BUILD_TESTS OFF"
         "GLFW_BUILD_DOCS OFF"
+        #"GLFW_INSTALL OFF" # Conflicts with pkg-dev 
         "GLFW_BUILD_WAYLAND OFF"    # libdecor-gtk-WARNING: Failed to initialize GTK
                                     # Failed to load plugin 'libdecor-gtk.so': failed to init
 )

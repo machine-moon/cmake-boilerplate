@@ -7,6 +7,10 @@ set(CPACK_PACKAGE_VERSION_MAJOR "1")
 set(CPACK_PACKAGE_VERSION_MINOR "0")
 set(CPACK_PACKAGE_VERSION_PATCH "0")
 
+# Required for Debian packaging
+set(CPACK_PACKAGE_CONTACT "tarek@mydomain.com")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgl1")
+
 # --- Package Generator ---
 if(APPLE)
     set(CPACK_GENERATOR "ZIP")

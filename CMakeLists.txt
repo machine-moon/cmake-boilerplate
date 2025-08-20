@@ -67,9 +67,6 @@ endif()
 # --- Executable ---
 add_executable(${PROJECT_NAME} src/Source/main.cpp)
 target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
-target_link_libraries(${PROJECT_NAME}
-    ${PROJECT_NAME}-lib
-)
 
 # --- Platform-Specific Settings ---
 if(APPLE)
@@ -88,10 +85,8 @@ if(ENABLE_ASAN)
     target_link_options(${PROJECT_NAME} PRIVATE -fsanitize=address)
 endif()
 
-install(TARGETS ${PROJECT_NAME}
-    RUNTIME DESTINATION bin
-)
-install(DIRECTORY src/Headers/ DESTINATION include)
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin )
+# install(DIRECTORY src/Headers/ DESTINATION include)
 
 # --- Configuration Info ---
 message(STATUS "Platform: ${CMAKE_SYSTEM_NAME}")

@@ -79,4 +79,7 @@ format:
 
 
 package: build
-	@cd build/release && cpack -G TGZ
+	@cd build/release && cpack && cpack -G DEB && cpack -G RPM
+# todo rpm 
+# sudo dpkg -i /path/to/twiz/build/release/twiz-1.0.0-linux.deb
+# list files dpkg-deb -c build/release/twiz-1.0.0-linux.deb 
