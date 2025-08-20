@@ -1,3 +1,4 @@
+set(CMAKE_MESSAGE_LOG_LEVEL WARNING)
 CPMAddPackage(
     NAME boost
     GITHUB_REPOSITORY boostorg/boost
@@ -7,6 +8,7 @@ CPMAddPackage(
         "BOOST_ENABLE_TESTS OFF"
         "BOOST_ENABLE_EXAMPLES OFF"
 )
+set(CMAKE_MESSAGE_LOG_LEVEL STATUS)
 
 add_library(boost_all_headers INTERFACE)
 

@@ -284,6 +284,7 @@ glad_add_library(glad STATIC
     API gl:core=4.6
     EXTENSIONS GL_ARB_debug_output
     LANGUAGE c
+    QUIET
 )
 
 target_include_directories(glad PUBLIC "${CMAKE_BINARY_DIR}/gladsources/glad/include")

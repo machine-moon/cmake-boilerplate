@@ -28,22 +28,21 @@ clean:
 # --- Build Targets ---
 
 build: build-release
-
 build-release:
 	@echo "Building in Release mode..."
-	@cmake -B build/release -DCMAKE_BUILD_TYPE=Release -G Ninja
+	@cmake -B build/release -DCMAKE_BUILD_TYPE=Release -G Ninja -Wno-deprecated
 	@cmake --build build/release
 	@cp build/release/compile_commands.json build/compile_commands.json || true
 
 build-debug:
 	@echo "Building in Debug mode..."
-	@cmake -B build/debug -DCMAKE_BUILD_TYPE=Debug -G Ninja
+	@cmake -B build/debug -DCMAKE_BUILD_TYPE=Debug -G Ninja -Wno-deprecated
 	@cmake --build build/debug
 	@cp build/debug/compile_commands.json build/compile_commands.json || true
 
 asan:
 	@echo "Building with AddressSanitizer..."
-	@cmake -B build/asan -DCMAKE_BUILD_TYPE=Debug -DENABLE_ASAN=ON -G Ninja
+	@cmake -B build/asan -DCMAKE_BUILD_TYPE=Debug -DENABLE_ASAN=ON -G Ninja -Wno-deprecated
 	@cmake --build build/asan
 	@cp build/asan/compile_commands.json build/compile_commands.json || true
 
