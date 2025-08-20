@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
 project(twiz)
-set(TWIZ ${PROJECT_NAME}) 
 
 
 # Generate compile_commands.json for IDE integration
@@ -44,39 +43,44 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/bin)
 
+
+# --- Targets ---
+set(sources
+    src/Source/boost_example.cpp
+    src/Source/cgal_example.cpp
+    src/Source/glad_example.cpp
+    src/Source/glfw_example.cpp
+    src/Source/glm_example.cpp
+    src/Source/imgui_example.cpp
+    src/Source/something.cpp
+)
+
+
+add_library(${PROJECT_NAME}-lib STATIC ${sources})
+target_include_directories(${PROJECT_NAME}-lib PUBLIC ${headers})
+
+add_executable(${PROJECT_NAME} src/Source/main.cpp)
+target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
+
 # Dependency management
 include(cmake/dependencies.cmake)
 find_package(OpenGL REQUIRED)
 
-# --- Targets ---
+# target
+if(NOT PROJECT_NAME STREQUAL "twiz")
+    message(FATAL_ERROR "PROJECT_NAME must be 'twiz'")
+endif()
 
-set(sources
-    src/Source/main.cpp
-)
-
-set(headers
-    src/Headers
-)
-
-
-set(${TWIZ}_deps "${CGAL_PACKAGE_INCLUDES};${Boost_INCLUDE_DIRS};${glad_include_dir}")
-
-add_library(${TWIZ}-lib STATIC ${sources} ${examples})
-target_include_directories(${TWIZ}-lib PUBLIC ${headers} src/Examples ${Boost_INCLUDE_DIRS} PRIVATE ${TWIZ}_deps)
-
-add_executable(${TWIZ} src/Source/main.cpp)
-target_include_directories(${TWIZ} PUBLIC ${headers} src/Examples ${Boost_INCLUDE_DIRS})
-target_link_libraries(${TWIZ}
-    ${TWIZ}-lib
+target_link_libraries(${PROJECT_NAME}
+    Boost::beast
+    CGAL
     glad
     glfw
     glm
-    Boost::beast
     imgui
     OpenGL::GL
     CGAL
 )
-
 
 
 
@@ -97,11 +101,11 @@ endif()
 if(ENABLE_ASAN)
     message(STATUS "Building with AddressSanitizer enabled")
     set(ASAN_FLAGS -fsanitize=address -fno-omit-frame-pointer)
-    target_compile_options(${TWIZ} PRIVATE ${ASAN_FLAGS})
-    target_link_options(${TWIZ} PRIVATE -fsanitize=address)
+    target_compile_options(${PROJECT_NAME} PRIVATE ${ASAN_FLAGS})
+    target_link_options(${PROJECT_NAME} PRIVATE -fsanitize=address)
 endif()
 
-install(TARGETS ${TWIZ}
+install(TARGETS ${PROJECT_NAME}
     RUNTIME DESTINATION bin
 )
 install(DIRECTORY include/ DESTINATION include)

@@ -6,13 +6,6 @@
 #include "glm_example.h"
 #include "imgui_example.h"
 #include "something.h"
-#include <iostream>
-
-namespace twiz {
-void print_message() {
-  std::cout << "Hello from the twiz library!" << std::endl;
-}
-} // namespace twiz
 
 int main() {
   twiz::print_message();
