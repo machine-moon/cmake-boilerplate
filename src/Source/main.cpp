@@ -9,6 +9,8 @@
 
 int main()
 {
+
+    /*
     twiz::print_message();
     twiz_examples::show_glm();
     twiz_examples::show_glad();
@@ -16,5 +18,7 @@ int main()
     twiz_examples::show_boost();
     twiz_examples::show_imgui();
     twiz_examples::show_cgal();
+    twiz_examples::create_window();*/
+    twiz_examples::show_button_example();
     return 0;
 }

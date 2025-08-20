@@ -5,27 +5,18 @@ on:
 
 jobs:
   build:
-    name: ${{ matrix.config.name }}
-    runs-on: ${{ matrix.config.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-        - {
-            name: "macOS",
-            os: macos-latest
-          }
-        - {
-            name: "Linux",
-            os: ubuntu-latest
-          }
-        - {
-            name: "Windows",
-            os: windows-latest
-          }
-
+    name: Linux
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Cache CPM Dependencies
+        uses: actions/cache@v4
+        with:
+          path: dependencies
+          key: ${{ runner.os }}-cpm-${{ hashFiles('cmake/dependencies.cmake') }}
+          restore-keys: |
+            ${{ runner.os }}-cpm-
 
       - name: Install CMake
         uses: jwlawson/actions-setup-cmake@v2
@@ -36,7 +27,6 @@ jobs:
         uses: seanmiddleditch/gha-setup-ninja@master
 
       - name: Install Linux Dependencies
-        if: matrix.config.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
           sudo apt-get install -y libglfw3-dev libgl1-mesa-dev xorg-dev
@@ -48,5 +38,4 @@ jobs:
 
       - name: Build
         run: |
-          cmake -B build . -G Ninja
-          cmake --build build
+          make build

@@ -4,6 +4,8 @@ CPMAddPackage(
     GIT_TAG boost-1.89.0
     OPTIONS
         "BOOST_ENABLE_CMAKE ON"
+        "BOOST_ENABLE_TESTS OFF"
+        "BOOST_ENABLE_EXAMPLES OFF"
 )
 
 add_library(boost_all_headers INTERFACE)

@@ -1,6 +1,7 @@
 #include "glfw_example.h"
 #include <GLFW/glfw3.h>
 #include <stdio.h>
+#include <unistd.h>
 
 namespace twiz_examples
 {
@@ -30,6 +31,13 @@ void create_window()
         return;
     }
     printf("Window created\n");
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+    #ifdef _WIN32
+        Sleep(2000);
+    #else
+        usleep(2000 * 1000);
+    #endif
     glfwDestroyWindow(window);
     glfwTerminate();
 }

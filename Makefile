@@ -49,7 +49,7 @@ asan:
 
 # --- Run Targets ---
 
-run:
+run: build
 	@echo "Scanning for latest binary in build/*/bin/ ..."
 	@bins=$$(ls -1 build/*/bin/$(APP_NAME) 2>/dev/null); \
 	if [ -z "$$bins" ]; then \
