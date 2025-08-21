@@ -2,7 +2,7 @@
 #include <glad/gl.h>
 #include <stdio.h>
 
-namespace twiz_examples
+namespace twiz
 {
 void show_glad()
 {
@@ -28,4 +28,4 @@ void show_gl_shading_language_version()
 {
     printf("GL Shading Language Version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 }
-} // namespace twiz_examples
+} // namespace twiz

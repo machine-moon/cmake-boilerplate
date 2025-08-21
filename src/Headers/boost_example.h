@@ -1,8 +1,16 @@
 #pragma once
 
-namespace twiz_examples
+namespace twiz
 {
-void show_boost();
-void beast_buffer_example();
-void beast_http_request_example();
-} // namespace twiz_examples
+
+// Main entry point for all Boost demonstrations
+void run_boost_networking_suite();
+
+// Individual demo functions showing Boost capabilities
+void boost_string_processing_demo();
+void boost_format_demo();
+void boost_regex_demo();
+void boost_optional_any_demo();
+void boost_lexical_cast_demo();
+
+} // namespace twiz

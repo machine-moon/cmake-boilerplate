@@ -10,12 +10,13 @@ help:
 	@echo "  all             Build release, debug, and ASan configurations."
 	@echo "  clean           Remove all build artifacts."
 	@echo ""
-	@echo "  build           Build the project in Release mode (default)."
+	@echo "  build           Alias for any build."
 	@echo "  build-debug     Build the project in Debug mode."
-	@echo "  build-release   Alias for 'build'."
+	@echo "  build-release   Build the project in Release mode."
 	@echo "  asan            Build the project in Debug mode with AddressSanitizer enabled."
 	@echo ""
-	@echo "  run             Run the Release build executable."
+	@echo "  run             Run the latest executable."
+	@echo "  run-release     Run the Release build executable."
 	@echo "  run-debug       Run the Debug build executable."
 	@echo "  run-asan        Run the ASan-enabled executable."
 
@@ -28,6 +29,7 @@ clean:
 # --- Build Targets ---
 
 build: build-release
+
 build-release:
 	@echo "Building in Release mode..."
 	@cmake -B build/release -DCMAKE_BUILD_TYPE=Release -G Ninja -Wno-deprecated
@@ -48,7 +50,7 @@ asan:
 
 # --- Run Targets ---
 
-run: build
+run:
 	@echo "Scanning for latest binary in build/*/bin/ ..."
 	@bins=$$(ls -1 build/*/bin/$(APP_NAME) 2>/dev/null); \
 	if [ -z "$$bins" ]; then \

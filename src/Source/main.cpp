@@ -5,20 +5,9 @@
 #include "glfw_example.h"
 #include "glm_example.h"
 #include "imgui_example.h"
-#include "something.h"
 
 int main()
 {
-
-    /*
-    twiz::print_message();
-    twiz_examples::show_glm();
-    twiz_examples::show_glad();
-    twiz_examples::show_glfw();
-    twiz_examples::show_boost();
-    twiz_examples::show_imgui();
-    twiz_examples::show_cgal();
-    twiz_examples::create_window();*/
-    twiz_examples::show_button_example();
+    twiz::run_imgui_showcase();
     return 0;
 }
