@@ -1,7 +1,8 @@
 CPMAddPackage(
     NAME boost
-    GITHUB_REPOSITORY boostorg/boost
+    VERSION 1.89.0
     GIT_TAG boost-1.89.0
+    GITHUB_REPOSITORY boostorg/boost
     OPTIONS
         "Boost_VERBOSE OFF"
         "BUILD_SHARED_LIBS 1" # SHARED (1) = .so/.dll  | STATIC(0) = .a/.lib 

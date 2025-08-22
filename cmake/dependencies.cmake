@@ -7,4 +7,5 @@ include(${CMAKE_SOURCE_DIR}/cmake/modules/glm.cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/modules/boost.cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/modules/cgal.cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/modules/imgui.cmake)
-
+include(${CMAKE_SOURCE_DIR}/cmake/modules/jsoncons.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/modules/lz4.cmake)

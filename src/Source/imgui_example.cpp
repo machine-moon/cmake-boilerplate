@@ -1,10 +1,12 @@
 #include "imgui_example.h"
-// #define GLFW_INCLUDE_NONE
+// Ensure glad is the only OpenGL loader
+#define GLFW_INCLUDE_NONE
 #include "GLFW/glfw3.h"
-// #include <glad/gl.h>
+#include <glad/gl.h>
 #include <cmath>
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
+#define IMGUI_IMPL_OPENGL_LOADER_GLAD
 #include <imgui_impl_opengl3.h>
 #include <iostream>
 #include <map>

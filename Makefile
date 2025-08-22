@@ -50,8 +50,8 @@ asan:
 	@cp build/asan/compile_commands.json build/compile_commands.json || true
 
 sane:
-	@echo "Building with AddressSanitizer & ThreadSanitizer & UndefinedBehaviorSanitizer..."
-	@cmake -B build/sane -DENABLE_ASAN=ON -DENABLE_TSAN=ON -DENABLE_UBAN=ON -G Ninja -Wno-deprecated
+	@echo "Building with AddressSanitizer || ThreadSanitizer || UndefinedBehaviorSanitizer..."
+	@cmake -B build/sane -DENABLE_ASAN=ON -DENABLE_TSAN=OFF -DENABLE_UBSAN=ON -G Ninja -Wno-deprecated
 	@cmake --build build/sane
 	@cp build/sane/compile_commands.json build/compile_commands.json || true
 
@@ -59,7 +59,7 @@ sane:
 # --- Run Targets ---
 
 run:
-	@echo "Scanning for latest binary in build/*/bin/ ..."
+	@echo "Scanning for latest binary..."
 	@bins=$$(ls -1 build/*/bin/$(APP_NAME) 2>/dev/null); \
 	if [ -z "$$bins" ]; then \
 		echo "No binaries named '$(APP_NAME)' found in build/*/bin/."; \

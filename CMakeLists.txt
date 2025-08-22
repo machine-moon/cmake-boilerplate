@@ -35,6 +35,8 @@ set(sources
     src/Source/glm_example.cpp
     src/Source/imgui_example.cpp
     src/Source/something.cpp
+    src/Source/jsoncons_example.cpp
+    src/Source/lz4_example.cpp
 )
 
 add_library(${PROJECT_NAME}-lib STATIC ${sources})
@@ -50,6 +52,8 @@ target_link_libraries(${PROJECT_NAME}-lib PUBLIC
     glm
     imgui
     OpenGL::GL
+    lz4
+    jsoncons
 )
 
 # --- Compiler Flags ---

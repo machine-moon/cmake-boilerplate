@@ -1,8 +1,8 @@
 CPMAddPackage(
     NAME glm
     VERSION 1.0.1
-    GIT_REPOSITORY https://github.com/g-truc/glm.git
     GIT_TAG 1.0.1
+    GIT_REPOSITORY https://github.com/g-truc/glm.git
     OPTIONS
         "GLM_ENABLE_CXX_20 ON"
         "GLM_BUILD_LIBRARY ON" # Shared | Header-Only
