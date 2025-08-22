@@ -1,16 +1,11 @@
-set(CMAKE_MESSAGE_LOG_LEVEL WARNING)
 CPMAddPackage(
     NAME CGAL
     GITHUB_REPOSITORY CGAL/cgal
     VERSION 6.0.1
-)
-set(CMAKE_MESSAGE_LOG_LEVEL STATUS)
-
-file(GLOB CGAL_PACKAGE_INCLUDES
-        "${CGAL_SOURCE_DIR}/*/include"
+    DOWNLOAD_ONLY TRUE
 )
 
 add_library(CGAL INTERFACE)
-
+file(GLOB CGAL_PACKAGE_INCLUDES "${CGAL_SOURCE_DIR}/*/include")
 target_include_directories(CGAL INTERFACE ${CGAL_PACKAGE_INCLUDES})
-target_link_libraries(CGAL INTERFACE boost_all_headers)
+# INTERFACE linkage propagates to dependents; link Boost::headers_only to twiz, not CGAL.

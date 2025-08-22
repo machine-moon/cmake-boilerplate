@@ -11,9 +11,10 @@ help:
 	@echo "  clean           Remove all build artifacts."
 	@echo ""
 	@echo "  build           Alias for any build."
-	@echo "  build-debug     Build the project in Debug mode."
-	@echo "  build-release   Build the project in Release mode."
-	@echo "  asan            Build the project in Debug mode with AddressSanitizer enabled."
+	@echo "  build-debug     Build the in Debug mode."
+	@echo "  build-release   Build the in Release mode."
+	@echo "  asan            Build the in RelWithDebInfo mode with AddressSanitizer enabled."
+	@echo "  sane            Build the in Debug mode with all sanitizer's enabled."
 	@echo ""
 	@echo "  run             Run the latest executable."
 	@echo "  run-release     Run the Release build executable."
@@ -44,9 +45,16 @@ build-debug:
 
 asan:
 	@echo "Building with AddressSanitizer..."
-	@cmake -B build/asan -DCMAKE_BUILD_TYPE=Debug -DENABLE_ASAN=ON -G Ninja -Wno-deprecated
+	@cmake -B build/asan -DENABLE_ASAN=ON -G Ninja -Wno-deprecated
 	@cmake --build build/asan
 	@cp build/asan/compile_commands.json build/compile_commands.json || true
+
+sane:
+	@echo "Building with AddressSanitizer & ThreadSanitizer & UndefinedBehaviorSanitizer..."
+	@cmake -B build/sane -DENABLE_ASAN=ON -DENABLE_TSAN=ON -DENABLE_UBAN=ON -G Ninja -Wno-deprecated
+	@cmake --build build/sane
+	@cp build/sane/compile_commands.json build/compile_commands.json || true
+
 
 # --- Run Targets ---
 
@@ -73,6 +81,8 @@ run-debug: build-debug
 run-asan: asan
 	@echo "Running the ASan-enabled build..."
 	@./build/asan/bin/twiz
+
+
 
 # --- Utils & Tooling ---
 

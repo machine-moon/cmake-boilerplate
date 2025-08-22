@@ -5,6 +5,8 @@ CPMAddPackage(
     GIT_TAG 1.0.1
     OPTIONS
         "GLM_ENABLE_CXX_20 ON"
+        "GLM_BUILD_LIBRARY ON" # Shared | Header-Only
+        "GLM_BUILD_TESTS 0"
+        "GLM_BUILD_INSTALL 0"
+        "GLM_ENABLE_FAST_MATH ON"
 )
-
-target_include_directories(glm INTERFACE ${glm_SOURCE_DIR})

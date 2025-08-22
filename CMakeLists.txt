@@ -4,7 +4,7 @@ project(twiz)
 # -- Find and use ccache if available to speed up builds --
 find_program(CCACHE_FOUND ccache)
 if(CCACHE_FOUND)
-    message(STATUS "Compiler cache found. Using ccache to speed up builds.")
+    message(STATUS "[Compiler cache found. Using ccache to speed up builds.]")
     set(CMAKE_CXX_COMPILER_LAUNCHER ${CCACHE_FOUND})
     set(CMAKE_C_COMPILER_LAUNCHER ${CCACHE_FOUND})
 endif()
@@ -40,7 +40,10 @@ set(sources
 add_library(${PROJECT_NAME}-lib STATIC ${sources})
 target_include_directories(${PROJECT_NAME}-lib PUBLIC src/Headers)
 target_link_libraries(${PROJECT_NAME}-lib PUBLIC
-    Boost::beast
+    Boost::filesystem 
+    Boost::regex 
+    Boost::system # shared libs
+    Boost::headers_only
     CGAL
     glad
     glfw
@@ -78,21 +81,79 @@ elseif(WIN32)
 endif()
 
 # --- Sanitizers ---
-if(ENABLE_ASAN)
-    message(STATUS "Building with AddressSanitizer enabled")
-    set(ASAN_FLAGS -fsanitize=address -fno-omit-frame-pointer)
-    target_compile_options(${PROJECT_NAME} PRIVATE ${ASAN_FLAGS})
-    target_link_options(${PROJECT_NAME} PRIVATE -fsanitize=address)
+option(ENABLE_ASAN "Build with address sanitizer" OFF)
+option(ENABLE_TSAN "Build with thread sanitizer" OFF)
+option(ENABLE_UBSAN "Build with undefined behavior sanitizer" OFF)
+
+set(SANITIZER_COMPILE_FLAGS)
+set(SANITIZER_LINK_FLAGS)
+
+if(MSVC)
+    if(ENABLE_ASAN)
+        set(CMAKE_BUILD_TYPE "RelWithDebInfo")
+    message(STATUS "[Instrumenting with Address Sanitizer (MSVC)]")
+        list(APPEND SANITIZER_COMPILE_FLAGS /fsanitize=address)
+        list(APPEND SANITIZER_LINK_FLAGS /fsanitize=address)
+    endif()
+    if(ENABLE_TSAN)
+        set(CMAKE_BUILD_TYPE "RelWithDebInfo")
+    message(WARNING "[ThreadSanitizer is not supported for MSVC.]")
+    endif()
+    if(ENABLE_UBSAN)
+        set(CMAKE_BUILD_TYPE "Debug")
+    message(WARNING "[UBSan is not supported for MSVC.]")
+    endif()
+else()
+    # Clang/GNU
+    if(ENABLE_ASAN)
+        set(CMAKE_BUILD_TYPE "RelWithDebInfo")
+    message(STATUS "[Instrumenting with Address Sanitizer (Clang/GNU)]")
+        list(APPEND SANITIZER_COMPILE_FLAGS -fsanitize=address -fno-omit-frame-pointer)
+        list(APPEND SANITIZER_LINK_FLAGS -fsanitize=address -fno-omit-frame-pointer)
+        if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+            list(APPEND SANITIZER_COMPILE_FLAGS -fsanitize-address-use-after-scope)
+            list(APPEND SANITIZER_LINK_FLAGS -fsanitize-address-use-after-scope)
+        endif()
+    endif()
+    if(ENABLE_TSAN)
+        set(CMAKE_BUILD_TYPE "RelWithDebInfo")
+    message(STATUS "[Instrumenting with Thread Sanitizer (Clang/GNU)]")
+        list(APPEND SANITIZER_COMPILE_FLAGS -fsanitize=thread -fno-omit-frame-pointer)
+        list(APPEND SANITIZER_LINK_FLAGS -fsanitize=thread)
+        if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+            list(APPEND SANITIZER_COMPILE_FLAGS -mllvm -tsan-instrument-memory-accesses=0 -mllvm -tsan-instrument-atomics=0 -mllvm -tsan-instrument-func-entry-exit=1 -fPIE)
+            list(APPEND SANITIZER_LINK_FLAGS -pie -Qunused-arguments)
+        endif()
+    endif()
+    if(ENABLE_UBSAN)
+        set(CMAKE_BUILD_TYPE "Debug")
+    message(STATUS "[Instrumenting with Undefined Behavior Sanitizer (Clang/GNU)]")
+        list(APPEND SANITIZER_COMPILE_FLAGS -fsanitize=undefined -fno-omit-frame-pointer)
+        list(APPEND SANITIZER_LINK_FLAGS -fsanitize=undefined -fno-omit-frame-pointer)
+        if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+            list(APPEND SANITIZER_COMPILE_FLAGS -fsanitize=implicit-conversion -fsanitize=implicit-integer-truncation -fsanitize=integer -fsanitize=nullability -fsanitize=vptr)
+            list(APPEND SANITIZER_LINK_FLAGS -fsanitize=implicit-conversion -fsanitize=implicit-integer-truncation -fsanitize=integer -fsanitize=nullability -fsanitize=vptr)
+        endif()
+    endif()
+endif()
+
+if(SANITIZER_COMPILE_FLAGS)
+    target_compile_options(${PROJECT_NAME} PRIVATE ${SANITIZER_COMPILE_FLAGS})
+    target_compile_options(${PROJECT_NAME}-lib PRIVATE ${SANITIZER_COMPILE_FLAGS})
+endif()
+if(SANITIZER_LINK_FLAGS)
+    target_link_options(${PROJECT_NAME} PRIVATE ${SANITIZER_LINK_FLAGS})
+    target_link_options(${PROJECT_NAME}-lib PRIVATE ${SANITIZER_LINK_FLAGS})
 endif()
 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin )
 # install(DIRECTORY src/Headers/ DESTINATION include)
 
 # --- Configuration Info ---
-message(STATUS "Platform: ${CMAKE_SYSTEM_NAME}")
-message(STATUS "Compiler: ${CMAKE_CXX_COMPILER_ID}")
-message(STATUS "C++ Standard: ${CMAKE_CXX_STANDARD}")
-message(STATUS "Build Type: ${CMAKE_BUILD_TYPE}")
+message(STATUS "[Platform: ${CMAKE_SYSTEM_NAME}]")
+message(STATUS "[Compiler: ${CMAKE_CXX_COMPILER_ID}]")
+message(STATUS "[C++ Standard: ${CMAKE_CXX_STANDARD}]")
+message(STATUS "[Build Type: ${CMAKE_BUILD_TYPE}]")
 
 # --- CPack Configuration ---
 include(cmake/cpack.cmake)
