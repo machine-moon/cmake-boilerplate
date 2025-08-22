@@ -1,10 +1,13 @@
 #include "boost_example.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/any.hpp>
+#include <boost/filesystem.hpp> // Compiled (static or dynamic)
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/optional.hpp>
+#include <boost/optional.hpp> // Header-only
 #include <boost/regex.hpp>
+#include <boost/regex.hpp> // Compiled (static or dynamic)
 #include <boost/version.hpp>
 #include <chrono>
 #include <iostream>
@@ -14,6 +17,43 @@
 
 namespace twiz
 {
+
+// 1. Header-only Boost library example
+void useBoostOptional()
+{
+    boost::optional<int> value;
+    if (!value)
+    {
+        value = 42;
+    }
+    std::cout << "Boost.Optional value: " << *value << std::endl;
+}
+
+// 2. Compiled Boost library example (can be linked statically)
+void useBoostFilesystem()
+{
+    boost::filesystem::path p = "/tmp/testfile.txt";
+    std::cout << "Filename using Boost.Filesystem: " << p.filename() << std::endl;
+}
+
+// 3. Compiled Boost library example (can be linked dynamically)
+void useBoostRegex()
+{
+    boost::regex re("\\d+");
+    std::string s = "Boost version: 189";
+    if (boost::regex_search(s, re))
+    {
+        std::cout << "Boost.Regex found a number in the string." << std::endl;
+    }
+}
+
+void fun()
+{
+    useBoostOptional();
+    useBoostFilesystem();
+    useBoostRegex();
+
+}
 
 void run_boost_networking_suite()
 {

@@ -5,6 +5,7 @@ namespace twiz
 
 // Main entry point for all Boost demonstrations
 void run_boost_networking_suite();
+void fun();
 
 // Individual demo functions showing Boost capabilities
 void boost_string_processing_demo();
