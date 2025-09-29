@@ -5,7 +5,6 @@ CPMAddPackage(
     GIT_REPOSITORY https://github.com/Dav1dde/glad.git
 )
 
-
 ##### Glad OpenGL loader integration setup - EOF has glad_add_library() - DO NOT EDIT #####
 
 # Configuration variables
@@ -289,5 +288,4 @@ glad_add_library(glad STATIC
 
 target_include_directories(glad PUBLIC "${CMAKE_BINARY_DIR}/gladsources/glad/include")
 
-#set(glad_include_dir "${CMAKE_BINARY_DIR}/gladsources/glad/include")
-#include_directories(${glad_include_dir})
+add_vendored_dependency(glad)

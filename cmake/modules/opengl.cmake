@@ -6,3 +6,5 @@ if(APPLE AND X11_FOUND)
 else()
   find_package(OpenGL)
 endif()
+
+add_system_dependency(OpenGL::GL)

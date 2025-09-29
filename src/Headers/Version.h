@@ -1,9 +1,9 @@
 #ifndef TWIZ_VERSION_H_
 #define TWIZ_VERSION_H_
 
-#define TWIZ_VERSION "0.0.2"
+#define TWIZ_VERSION "0.0.3"
 #define TWIZ_MAJOR_VERSION 0
 #define TWIZ_MINOR_VERSION 0
-#define TWIZ_PATCH_VERSION 2
+#define TWIZ_PATCH_VERSION 3
 
 #endif  // TWIZ_VERSION_H_

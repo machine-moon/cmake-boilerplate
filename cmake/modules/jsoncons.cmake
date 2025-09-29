@@ -8,3 +8,5 @@ CPMAddPackage(
 
 add_library(jsoncons INTERFACE)
 target_include_directories(jsoncons INTERFACE "${jsoncons_SOURCE_DIR}/include")
+
+add_vendored_dependency(jsoncons)

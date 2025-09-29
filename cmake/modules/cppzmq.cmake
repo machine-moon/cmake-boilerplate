@@ -1,4 +1,3 @@
-
 add_library(libzmq ALIAS LIBZMQ::libzmq)
 CPMAddPackage(
     NAME cppzmq
@@ -9,3 +8,4 @@ CPMAddPackage(
         "CPPZMQ_BUILD_TESTS OFF"
 )
 
+add_vendored_dependency(cppzmq)

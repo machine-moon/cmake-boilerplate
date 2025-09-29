@@ -1,3 +1,56 @@
+# --- Function to print a section header ---
+# USAGE: section(<title>)
+# Example: section("GPU Configuration")
+function(section title)
+    string(LENGTH "${title}" _len)
+    math(EXPR _total_len "${_len} + 8")
+    string(REPEAT "=" ${_total_len} _equals)
+    message(STATUS "")
+    message(STATUS "${_equals}")
+    message(STATUS "=== ${title} ===")
+    message(STATUS "${_equals}")
+    message(STATUS "")
+endfunction()
+
+# --- Function to inspect target compile options ---
+# USAGE: inspect_target(<target_name>)
+function(inspect_target target)
+    section("Inspecting Target: ${target}")
+
+    get_target_property(flags   ${target} COMPILE_OPTIONS)
+    get_target_property(iflags  ${target} INTERFACE_COMPILE_OPTIONS)
+    get_target_property(cflags  ${target} COMPILE_FLAGS)
+
+    section("COMPILE_OPTIONS")
+    message(STATUS "${flags}")
+
+    section("INTERFACE_COMPILE_OPTIONS")
+    message(STATUS "${iflags}")
+
+    section("COMPILE_FLAGS")
+    message(STATUS "${cflags}")
+endfunction()
+
+# --- Macro to append vendored dependencies to list ---
+# USAGE: add_vendored_dependency(<dependency>)
+macro(add_vendored_dependency dep)
+    list(APPEND ${_P}_vendored_dependencies ${dep})
+endmacro()
+
+# ---Macro to append system dependencies to list ---
+# USAGE: add_system_dependency(<dependency>)
+macro(add_system_dependency dep)
+    list(APPEND ${_P}_system_dependencies ${dep})
+endmacro()
+
+# ---Macro to append include dependencies to list ---
+# USAGE: add_include_dependency(<dependency>)
+macro(add_include_dependency dep)
+    list(APPEND ${_P}_include_dependencies ${dep})
+endmacro()
+
+#message(FATAL_ERROR "Stop")
+
 # --- Function to apply both sanitizer and compile flags to a target ---
 # USAGE: apply_flags(<target>)
 function(apply_flags target)
@@ -157,38 +210,3 @@ function(print_variables_with_prefix prefix)
         endif()
     endforeach()
 endfunction()
-
-# --- Function to print a section header ---
-# USAGE: section(<title>)
-# Example: section("GPU Configuration")
-function(section title)
-    string(LENGTH "${title}" _len)
-    math(EXPR _total_len "${_len} + 8")
-    string(REPEAT "=" ${_total_len} _equals)
-    message(STATUS "")
-    message(STATUS "${_equals}")
-    message(STATUS "=== ${title} ===")
-    message(STATUS "${_equals}")
-    message(STATUS "")
-endfunction()
-
-# --- Function to inspect target compile options ---
-# USAGE: inspect_target(<target_name>)
-function(inspect_target target)
-    section("Inspecting Target: ${target}")
-
-    get_target_property(flags   ${target} COMPILE_OPTIONS)
-    get_target_property(iflags  ${target} INTERFACE_COMPILE_OPTIONS)
-    get_target_property(cflags  ${target} COMPILE_FLAGS)
-
-    section("COMPILE_OPTIONS")
-    message(STATUS "${flags}")
-
-    section("INTERFACE_COMPILE_OPTIONS")
-    message(STATUS "${iflags}")
-
-    section("COMPILE_FLAGS")
-    message(STATUS "${cflags}")
-endfunction()
-
-#message(FATAL_ERROR "Stop")

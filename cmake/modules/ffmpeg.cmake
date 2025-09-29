@@ -14,3 +14,5 @@ if(FFMPEG_FOUND)
 else()
     message(FATAL_ERROR "FFmpeg not found. Please install FFmpeg development libraries.")
 endif()
+
+add_system_dependency(FFmpeg::FFmpeg)

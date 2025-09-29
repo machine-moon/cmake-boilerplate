@@ -10,3 +10,5 @@ CPMAddPackage(
         "GLM_BUILD_INSTALL 0"
         "GLM_ENABLE_FAST_MATH ON"
 )
+
+add_vendored_dependency(glm)

@@ -12,3 +12,5 @@ CPMAddPackage(
         "GLFW_BUILD_WAYLAND OFF"    # libdecor-gtk-WARNING: Failed to initialize GTK
                                     # Failed to load plugin 'libdecor-gtk.so': failed to init
 )
+
+add_vendored_dependency(glfw)

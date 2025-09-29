@@ -2,6 +2,11 @@ Release Notes
 -------------------------------------------------------------------
 Document all technical changes introduced in this release as concise bullet points below.
 
+v0.0.3 (2025-09-29)
+----------------------
+Tarek Ibrahim
+- Simplified cmake modules
+
 v0.0.2 (2025-09-28)
 ----------------------
 Tarek Ibrahim

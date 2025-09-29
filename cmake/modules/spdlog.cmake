@@ -36,3 +36,5 @@ CPMAddPackage(
         "SPDLOG_FWRITE_UNLOCKED OFF"                # Use unlocked variant of fwrite for performance
         "SPDLOG_TIDY OFF"                           # Run clang-tidy
 )
+
+add_vendored_dependency(spdlog)

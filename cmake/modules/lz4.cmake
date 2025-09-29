@@ -8,3 +8,5 @@ CPMAddPackage(
 
 add_library(lz4 STATIC ${lz4_SOURCE_DIR}/lib/lz4.c)
 target_include_directories(lz4 PUBLIC ${lz4_SOURCE_DIR}/lib)
+
+add_vendored_dependency(lz4)

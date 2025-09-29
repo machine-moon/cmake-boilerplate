@@ -2,8 +2,12 @@ include(cmake/CPM.cmake)
 set(CPM_SOURCE_CACHE "${CMAKE_SOURCE_DIR}/dependencies")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
+set(${_P}_system_dependencies "")
+set(${_P}_vendored_dependencies "")
+set(${_P}_include_directories "")
+
 # --- System Dependencies ---
-find_package(OpenSSL COMPONENTS Crypto SSL REQUIRED)
+include(openssl)
 include(opencv-cuda)
 include(opengl)
 find_package(PkgConfig REQUIRED)
@@ -22,31 +26,5 @@ include(jsoncons)
 include(lz4)
 include(cppzmq)
 include(spdlog)
-
-# --- Aggregate Dependencies ---
-set(system_dependencies
-    OpenSSL::Crypto
-    OpenSSL::SSL
-    OpenGL::GL
-    FFmpeg::FFmpeg
-    LIBZMQ::libzmq
-    SODIUM::libsodium
-)
-
-set(vendored_dependencies
-    glad
-    glfw
-    glm
-    Boost::boost
-    Boost::filesystem
-    Boost::regex
-    Boost::system
-    CGAL
-    imgui
-    jsoncons
-    lz4
-    cppzmq
-    spdlog
-)
 
 # Note to self: https://rocm.docs.amd.com/en/latest/reference/api-libraries.html or cuda-x-libraries

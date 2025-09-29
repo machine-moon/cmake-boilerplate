@@ -21,7 +21,7 @@ else()
 endif()
 
 # --- Project Name ---
-project(twiz VERSION 0.0.2)
+project(twiz VERSION 0.0.3)
 string(TOUPPER "${PROJECT_NAME}" _P)
 
 # --- Output Directories ---
@@ -50,7 +50,6 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-
 # --- Options ---
 set($(_p)_SANITIZER "off" CACHE STRING "Sanitizer: one of off, asan, tsan")
 set_property(CACHE $(_p)_SANITIZER PROPERTY STRINGS "off;asan;tsan")
@@ -61,7 +60,8 @@ set_property(CACHE $(_p)_WARNINGS_AS_ERRORS PROPERTY STRINGS "off;on")
 # --- Dependencies ---
 include(cmake/functions.cmake)
 include(cmake/dependencies.cmake)
-set(external_dependencies ${system_dependencies} ${vendored_dependencies})
+set(external_dependencies ${${_P}_system_dependencies} ${${_P}_vendored_dependencies})
+add_include_dependency(src/Headers)
 
 # --- Source Files ---
 include(cmake/gpu.cmake)
@@ -72,7 +72,7 @@ set(source_files ${cpu_sources} ${gpu_sources})
 
 # --- Library ---
 add_library(${_P}-lib STATIC ${source_files})
-target_include_directories(${_P}-lib PUBLIC src/Headers)
+target_include_directories(${_P}-lib PUBLIC ${${_P}_include_dependencies})
 target_link_libraries(${_P}-lib PRIVATE ${external_dependencies})
 apply_flags(${_P}-lib)
 # --- Platform-Specific Settings ---

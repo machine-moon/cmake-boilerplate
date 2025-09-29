@@ -52,3 +52,8 @@ set(ALL_BOOST_TARGETS
     #Boost::python
     #Boost::mpi
 )
+
+add_vendored_dependency(Boost::boost)
+add_vendored_dependency(Boost::filesystem)
+add_vendored_dependency(Boost::regex)
+add_vendored_dependency(Boost::system)
